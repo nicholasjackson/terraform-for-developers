@@ -24,11 +24,11 @@ data "cloudflare_zone" "domain" {
 
 resource "digitalocean_app" "static_site_example" {
   spec {
-    name   = "static-site-mame"
+    name   = "static-site-${var.cloudflare_subdomain}"
     region = "ams"
 
     static_site {
-      name       = "mame-sf2"
+      name       = var.cloudflare_subdomain
       source_dir = "/src"
 
       github {
@@ -42,14 +42,14 @@ resource "digitalocean_app" "static_site_example" {
 
 resource "cloudflare_record" "mame" {
   zone_id = data.cloudflare_zone.domain.zone_id
-  name    = "mame"
+  name    = var.cloudflare_subdomain
   value   = "192.0.2.1"
   type    = "A"
   proxied = true
 }
 
 resource "cloudflare_worker_script" "redirect_script" {
-  name    = "proxy-3343424sfdksjfsf"
+  name    = "proxy-${var.cloudflare_subdomain}"
   content = templatefile("./workers/proxy.js", { hostname = trimprefix(digitalocean_app.static_site_example.live_url, "https://") })
 }
 
@@ -63,6 +63,10 @@ output "cloudflare_zone" {
   value = data.cloudflare_zone.domain.zone_id
 }
 
-output "do_url" {
+output "digitalocean_url" {
   value = digitalocean_app.static_site_example.live_url
+}
+
+output "cloudflare_url" {
+  value = "https://${cloudflare_record.mame.hostname}"
 }
