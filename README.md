@@ -19,7 +19,7 @@ be shown.
 Copy this token and set it as an environment variable, Terraform will automatically read this variable and automatically
 pass it with any API request. Using an environment ensures that the API key is not hardcoded into the config and accidentally
 leaks into the public domain. Leaking your API key will allow third parties to create infrastructure in your DigitalOcean
-account.
+account (The token in the image above was revoked just after the screenshot was taken).
 
 ```shell
 export DIGITALOCEAN_TOKEN="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
