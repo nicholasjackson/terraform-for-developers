@@ -25,7 +25,7 @@ func NewMyStack(scope constructs.Construct, id string) cdktf.TerraformStack {
 
 	subDomain := cdktf.NewTerraformVariable(stack, jsii.String("var_sub_domain"), &cdktf.TerraformVariableConfig{
 		Type:    jsii.String("string"),
-		Default: jsii.String("mame-go"),
+		Default: jsii.String("mame-gos"),
 	})
 
 	cloudFlareZone := cloudflare.NewDataCloudflareZone(stack, jsii.String("zone_domain"), &cloudflare.DataCloudflareZoneConfig{

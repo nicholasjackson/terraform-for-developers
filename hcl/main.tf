@@ -18,6 +18,14 @@ provider "digitalocean" {
 provider "cloudflare" {
 }
 
+variable "cloudflare_domain" {
+  default = "demo.gs"
+}
+
+variable "cloudflare_subdomain" {
+  default = "mame-hcl"
+}
+
 data "cloudflare_zone" "domain" {
   name = var.cloudflare_domain
 }
@@ -63,10 +71,11 @@ output "cloudflare_zone" {
   value = data.cloudflare_zone.domain.zone_id
 }
 
+output "cloudflare_url" {
+  value = "https://${cloudflare_record.mame.hostname}"
+}
+
 output "digitalocean_url" {
   value = digitalocean_app.static_site_example.live_url
 }
 
-output "cloudflare_url" {
-  value = "https://${cloudflare_record.mame.hostname}"
-}

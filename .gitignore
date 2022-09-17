@@ -3,3 +3,4 @@
 terraform.tfstate
 terraform.tfstate.backup
 cdktf.out
+node_modules
