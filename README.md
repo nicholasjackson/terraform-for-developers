@@ -22,7 +22,7 @@ leaks into the public domain. Leaking your API key will allow third parties to c
 account.
 
 ```shell
-export DIGITALOCEAN_TOKEN="dop_v1_a2e2a9b30b499fe62c64101528753c46fd4db80c1edfd3f5df2485c86344b78c"
+export DIGITALOCEAN_TOKEN="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 ```
 
 ## Cloudflare Token
@@ -34,6 +34,6 @@ https://dash.cloudflare.com/profile/api-tokens
 If you click on 
 
 ```shell
-export CLOUDFLARE_ACCOUNT_ID="8abde2bb370dcd685cbd1a84ec091a68"
-export CLOUDFLARE_API_TOKEN="-655W6itNZ9sCKBphNCsBxOETIHTDzzT7BHmSX9J"
+export CLOUDFLARE_ACCOUNT_ID="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+export CLOUDFLARE_API_TOKEN="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 ```
