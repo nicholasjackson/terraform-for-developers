@@ -9,12 +9,12 @@ Fetch your token from
 
 (https://cloud.digitalocean.com/account/api/tokens)[https://cloud.digitalocean.com/account/api/tokens]
 
-![](image/do_1.jpg)
+![](images/do_1.jpg)
 
 If you complete the details and then press the `Generate` button you will be taken back to the other screen and the token will
 be shown.
 
-![](image/do_2.jpg)
+![](images/do_2.jpg)
 
 Copy this token and set it as an environment variable, Terraform will automatically read this variable and automatically
 pass it with any API request. Using an environment ensures that the API key is not hardcoded into the config and accidentally
