@@ -27,7 +27,8 @@ variable "cloudflare_subdomain" {
 }
 
 data "cloudflare_zone" "domain" {
-  name = var.cloudflare_domain
+  count = var.cloudflare_domain == "" ? 0 : 1
+  name  = var.cloudflare_domain
 }
 
 resource "digitalocean_app" "static_site_example" {
@@ -49,7 +50,9 @@ resource "digitalocean_app" "static_site_example" {
 }
 
 resource "cloudflare_record" "mame" {
-  zone_id = data.cloudflare_zone.domain.zone_id
+  count = var.cloudflare_domain == "" ? 0 : 1
+
+  zone_id = data.cloudflare_zone.domain.0.zone_id
   name    = var.cloudflare_subdomain
   value   = "192.0.2.1"
   type    = "A"
@@ -57,14 +60,18 @@ resource "cloudflare_record" "mame" {
 }
 
 resource "cloudflare_worker_script" "redirect_script" {
+  count = var.cloudflare_domain == "" ? 0 : 1
+
   name    = "proxy-${var.cloudflare_subdomain}"
   content = templatefile("./workers/proxy.js", { hostname = trimprefix(digitalocean_app.static_site_example.live_url, "https://") })
 }
 
 resource "cloudflare_worker_route" "proxy_route" {
+  count = var.cloudflare_domain == "" ? 0 : 1
+
   zone_id     = data.cloudflare_zone.domain.zone_id
-  pattern     = "${cloudflare_record.mame.hostname}/*"
-  script_name = cloudflare_worker_script.redirect_script.name
+  pattern     = "${cloudflare_record.mame.0.hostname}/*"
+  script_name = cloudflare_worker_script.redirect_script.0.name
 }
 
 output "cloudflare_zone" {
@@ -72,7 +79,7 @@ output "cloudflare_zone" {
 }
 
 output "cloudflare_url" {
-  value = "https://${cloudflare_record.mame.hostname}"
+  value = "https://${cloudflare_record.mame.0.hostname}"
 }
 
 output "digitalocean_url" {
