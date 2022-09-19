@@ -11,7 +11,8 @@ class MyStack extends TerraformStack {
 
     new DigitaloceanProvider(this, "digitalocean", {})
     new CloudflareProvider(this, "cloudflare", {})
-    
+
+    // Set this value to a blank string to disable the creation of cloudflare resources
     const domain = new TerraformVariable(this, "domain", {
       default: "demo.gs"
     });
@@ -20,10 +21,6 @@ class MyStack extends TerraformStack {
 
     const subdomain = new TerraformVariable(this, "subdomain", {
       default: "mame-ts"
-    });
-
-    const zone = new DataCloudflareZone(this, "zone", {
-      name: domain.value
     });
 
     const app = new DOApp(this, "static_site_example", {
@@ -44,35 +41,41 @@ class MyStack extends TerraformStack {
       }
     });
 
-    const record = new Record(this, "mame", {
-      zoneId: zone.zoneId,
-      name: subdomain.value,
-      value: "192.0.2.1",
-      type: "A",
-      proxied: true
-    });
+    if(domain.value !== "") {
+      const zone = new DataCloudflareZone(this, "zone", {
+        name: domain.value
+      });
 
-    const scriptPath = path.resolve(__dirname, "./workers/proxy.js")
+      const record = new Record(this, "mame", {
+        zoneId: zone.zoneId,
+        name: subdomain.value,
+        value: "192.0.2.1",
+        type: "A",
+        proxied: true
+      });
 
-    const script = new WorkerScript(this, "redirect_script", {
-      name: "proxy-" + subdomain.value,
-      content: Fn.templatefile(scriptPath, {hostname: Fn.trimprefix(app.liveUrl, "https://")})
-    });
+      const scriptPath = path.resolve(__dirname, "./workers/proxy.js")
 
-    new WorkerRoute(this, "proxy_route", {
-      zoneId: zone.zoneId,
-      pattern: record.hostname + "/*",
-      scriptName: script.name
-    });
+      const script = new WorkerScript(this, "redirect_script", {
+        name: "proxy-" + subdomain.value,
+        content: Fn.templatefile(scriptPath, {hostname: Fn.trimprefix(app.liveUrl, "https://")})
+      });
 
-    new TerraformOutput(this, "cloudflare_zone", {
-      value: zone.zoneId
-    })
-    
-    new TerraformOutput(this, "cloudflare_url", {
-      value: "https://" + record.hostname
-    })
-    
+      new WorkerRoute(this, "proxy_route", {
+        zoneId: zone.zoneId,
+        pattern: record.hostname + "/*",
+        scriptName: script.name
+      });
+
+      new TerraformOutput(this, "cloudflare_zone", {
+        value: zone.zoneId
+      })
+
+      new TerraformOutput(this, "cloudflare_url", {
+        value: "https://" + record.hostname
+      })
+    }
+
     new TerraformOutput(this, "digitalocean_url", {
       value: app.liveUrl
     })
