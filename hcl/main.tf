@@ -42,7 +42,7 @@ resource "digitalocean_app" "static_site_example" {
       github {
         repo           = "nicholasjackson/mame-wasm"
         deploy_on_push = true
-        branch         = "pang"
+        branch         = "main"
       }
     }
   }
