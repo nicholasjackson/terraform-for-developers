@@ -1,0 +1,13 @@
+{
+  "version": "0.12.3",
+  "stacks": {
+    "static_app": {
+      "name": "static_app",
+      "constructPath": "static_app",
+      "workingDirectory": "stacks/static_app",
+      "synthesizedStackPath": "stacks/static_app/cdk.tf.json",
+      "annotations": [],
+      "dependencies": []
+    }
+  }
+}
