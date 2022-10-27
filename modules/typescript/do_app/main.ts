@@ -7,7 +7,7 @@ class StaticApp extends TFModuleStack {
   constructor(scope: Construct, name: string) {
     super(scope, name);
 
-    new ProviderRequirement(this, "digitalocean")
+    new ProviderRequirement(this, "digitalocean","2.22.3", "digitalocean/digitalocean")
 
     const appName = new TFModuleVariable(this, "name", {
       default: "module",
@@ -38,7 +38,7 @@ class StaticApp extends TFModuleStack {
       }
     });
     
-    new TerraformOutput(this, "uri", {value: app.fqn}) 
+    new TerraformOutput(this, "uri", {value: app.liveUrl}) 
 
   }
 }

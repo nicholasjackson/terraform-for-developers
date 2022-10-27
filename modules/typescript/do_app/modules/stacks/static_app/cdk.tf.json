@@ -13,7 +13,7 @@
   },
   "output": {
     "uri": {
-      "value": "${digitalocean_app.static_site}"
+      "value": "${digitalocean_app.static_site.live_url}"
     }
   },
   "resource": {
@@ -46,17 +46,23 @@
   "terraform": {
     "required_providers": {
       "digitalocean": {
+        "source": "digitalocean/digitalocean",
+        "version": "2.22.3"
       }
     }
   },
   "variable": {
-    "name": {
-      "default": "module",
-      "description": "Name of the DigitalOcean static site"
-    },
-    "region": {
-      "default": "ams",
-      "description": "Region to deploy the app to"
-    }
+    "name": [
+      {
+        "default": "module",
+        "description": "Name of the DigitalOcean static site"
+      }
+    ],
+    "region": [
+      {
+        "default": "ams",
+        "description": "Region to deploy the app to"
+      }
+    ]
   }
 }

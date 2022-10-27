@@ -9,3 +9,4 @@ python_version = "3"
 [packages]
 cdktf = "~=0.12.3"
 pytest = "*"
+cdktf-cdktf-provider-digitalocean = "~=2.0.79"
