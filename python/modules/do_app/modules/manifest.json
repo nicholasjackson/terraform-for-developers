@@ -1,0 +1,13 @@
+{
+  "version": "0.12.3",
+  "stacks": {
+    "do_static_app": {
+      "name": "do_static_app",
+      "constructPath": "do_static_app",
+      "workingDirectory": "stacks/do_static_app",
+      "synthesizedStackPath": "stacks/do_static_app/cdk.tf.json",
+      "annotations": [],
+      "dependencies": []
+    }
+  }
+}

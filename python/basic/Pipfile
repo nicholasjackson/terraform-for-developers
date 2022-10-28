@@ -1,0 +1,13 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[requires]
+python_version = "3"
+
+[packages]
+cdktf = "~=0.12.2"
+pytest = "*"
+cdktf-cdktf-provider-digitalocean = "~=2.0.60"
+cdktf-cdktf-provider-cloudflare = "~=2.0.58"

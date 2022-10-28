@@ -1,0 +1,4 @@
+cdktf~=0.13.2
+pytest
+
+cdktf-cdktf-provider-digitalocean~=2.0.79

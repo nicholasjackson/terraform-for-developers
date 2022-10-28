@@ -1,0 +1,70 @@
+{
+  "//": {
+    "metadata": {
+      "backend": "local",
+      "stackName": "do_static_app",
+      "version": "0.12.3"
+    },
+    "outputs": {
+      "do_static_app": {
+        "uri": "uri"
+      }
+    }
+  },
+  "output": {
+    "uri": [
+      {
+        "description": "Live URL for the application",
+        "value": "${digitalocean_app.static_site_example.live_url}"
+      }
+    ]
+  },
+  "resource": {
+    "digitalocean_app": {
+      "static_site_example": {
+        "//": {
+          "metadata": {
+            "path": "do_static_app/static_site_example",
+            "uniqueId": "static_site_example"
+          }
+        },
+        "spec": {
+          "name": "static-site-${var.name}",
+          "region": "${var.region}",
+          "static_site": [
+            {
+              "github": {
+                "branch": "main",
+                "repo": "nicholasjackson/mame-wasm"
+              },
+              "name": "${var.name}",
+              "source_dir": "/src"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "terraform": {
+    "required_providers": {
+      "digitalocean": {
+        "source": "digitalocean/digitalocean",
+        "version": ">=2.0.0"
+      }
+    }
+  },
+  "variable": {
+    "name": [
+      {
+        "default": "mame",
+        "description": "Name of the applicaton to create in DigitalOcean"
+      }
+    ],
+    "region": [
+      {
+        "default": "ams",
+        "description": "DgitalOcean region to deploy the app to"
+      }
+    ]
+  }
+}

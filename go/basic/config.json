@@ -1,0 +1,6 @@
+{
+  "cloudflare_enabled": true,
+  "name": "mame-go",
+  "region": "ams",
+  "domain": "demo.gs"
+}
