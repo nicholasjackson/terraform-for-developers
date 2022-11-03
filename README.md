@@ -49,14 +49,40 @@ You can get a token from the following URL:
 
 https://dash.cloudflare.com/profile/api-tokens
 
-If you click on 
+If you click on "Create Token" then "Create Custom Token" you will be able to specify the permissions that Terraform needs. Your token will
+need the following privileges.
+
+#### Permisisons
+
+| ------- | -------------- | ---- |
+| Account | Worker Scripts | Edit |
+| Zone    | Worker Routes  | Edit |
+| Zone    | DNS            | Edit |
+
+#### Account Resources
+
+| ------- | -------------- |
+| Include | Specific Account where your domain is hosted |
+
+#### Zone Resources
+
+| ------- | -------------- | -------------- |
+| Include | Specific Zone  | Your zone name |
+
+#### TTL
+
+It is good practice to keep the TTL as short as possible, just in case you acccidentally leak the token.
+
+![](./images/cloudflare_token.jpg)
+
+Then you can set this token along with your Cloudflare account ID to the following environment variables.
 
 ```shell
 export CLOUDFLARE_ACCOUNT_ID="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 export CLOUDFLARE_API_TOKEN="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 ```
 
-**NOTE:** Cloudflare is optional and can be disabled by setting the environment variable `TF_VAR_cloudflare_enabled=false`
+Once everything is setup please see the following examples for instructions on how to run each individual demo.
 
 ## Examples
 
@@ -65,6 +91,8 @@ export CLOUDFLARE_API_TOKEN="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 #### ./go/basic
 
 Example using Cloudflare and DigitalOcean to deploy a DigitalOcean App and expose a Cloudflare domain for public access.
+
+**NOTE:** Cloudflare is optional and can be disabled by setting the environment variable `VAR_cloudflare_enabled=false`
 
 #### ./go/modules/example
 
