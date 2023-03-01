@@ -1,13 +1,12 @@
 import * as path from "path";
 import { Construct } from "constructs";
-import { App, TerraformStack, TerraformVariable, TerraformOutput, Fn} from "cdktf";
-import {DigitaloceanProvider, App as DOApp} from "@cdktf/provider-digitalocean";
-import {CloudflareProvider, Record, DataCloudflareZone, WorkerScript, WorkerRoute } from "@cdktf/provider-cloudflare";
+import { App, TerraformStack, TerraformVariable, TerraformOutput, Fn } from "cdktf";
+import { DigitaloceanProvider, App as DOApp } from "@cdktf/provider-digitalocean";
+import { CloudflareProvider, Record, DataCloudflareZone, WorkerScript, WorkerRoute } from "@cdktf/provider-cloudflare";
 
 class MyStack extends TerraformStack {
   constructor(scope: Construct, name: string) {
     super(scope, name);
-
 
     new DigitaloceanProvider(this, "digitalocean", {})
     new CloudflareProvider(this, "cloudflare", {})
@@ -16,7 +15,7 @@ class MyStack extends TerraformStack {
     const domain = new TerraformVariable(this, "domain", {
       default: "demo.gs"
     });
-    
+
     console.log("vars: %s", domain.stringValue);
 
     const subdomain = new TerraformVariable(this, "subdomain", {
@@ -41,7 +40,7 @@ class MyStack extends TerraformStack {
       }
     });
 
-    if(domain.value !== "") {
+    if (domain.value !== "") {
       const zone = new DataCloudflareZone(this, "zone", {
         name: domain.value
       });
@@ -58,7 +57,7 @@ class MyStack extends TerraformStack {
 
       const script = new WorkerScript(this, "redirect_script", {
         name: "proxy-" + subdomain.value,
-        content: Fn.templatefile(scriptPath, {hostname: Fn.trimprefix(app.liveUrl, "https://")})
+        content: Fn.templatefile(scriptPath, { hostname: Fn.trimprefix(app.liveUrl, "https://") })
       });
 
       new WorkerRoute(this, "proxy_route", {

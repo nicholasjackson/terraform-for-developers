@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: MPL-2.0
 import { Construct } from "constructs";
 import { App, TerraformStack, TerraformOutput } from "cdktf";
-import { DoStaticApp } from "./.gen/modules/stacks/do_static_app"
+import { DoApp } from "./.gen/modules/modules/do_app"
 import {DigitaloceanProvider} from "@cdktf/provider-digitalocean"
 
 class MyStack extends TerraformStack {
@@ -12,9 +12,9 @@ class MyStack extends TerraformStack {
     // define resources here
     const provider = new DigitaloceanProvider(this,"digitalocean");
 
-    const app = new DoStaticApp(this, "app", {name:"typescriptmodule", providers: [provider]});
+    const app = new DoApp(this, "app", {name:"typescriptmodule", providers: [provider]});
 
-    new TerraformOutput(this,"uri",{value: app.uriOutput}); 
+    new TerraformOutput(this,"uri",{value: app.fqn}); 
   }
 }
 

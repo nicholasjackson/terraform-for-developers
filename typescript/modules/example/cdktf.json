@@ -4,7 +4,7 @@
   "projectId": "9f00740b-370d-4e57-96f2-dc0284e4b2e3",
   "sendCrashReports": "true",
   "terraformProviders": [],
-  "terraformModules": ["../../../python/modules/do_app/modules/stacks/do_static_app"],
+  "terraformModules": ["/home/nicj/go/src/github.com/nicholasjackson/terraform-for-developers/hcl/modules/do_app"],
   "context": {
     "excludeStackIdFromLogicalIds": "true",
     "allowSepCharsInLogicalIds": "true"

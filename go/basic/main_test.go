@@ -2,41 +2,53 @@ package main
 
 import (
 	"testing"
+
+	"github.com/hashicorp/cdktf-provider-digitalocean-go/digitalocean/v2"
 	"github.com/hashicorp/terraform-cdk-go/cdktf"
-	"github.com/aws/jsii-runtime-go"
 )
 
 // The tests below are example tests, you can find more information at
 // https://cdk.tf/testing
 
-/*
-var stack = NewMyApplicationsAbstraction(cdktf.Assertions_App(nil), "stack")
-var synth = cdktf.Assertions_Synth(stack)
+var cfg = &config{
+	CloudFlareEnabled: true,
+	Name:              "testing",
+}
 
-func TestShouldContainContainer(t *testing.T){
-	assertion := cdktf.Assertions_ToHaveResource(synth, docker.Container_TfResourceType())
+var (
+	fulltest = true
+	stack    = NewMyStack(cdktf.Testing_App(nil), "stack", cfg)
+	synth    = cdktf.Testing_Synth(stack, &fulltest)
+)
 
-	if !*assertion  {
-		t.Error(assertion.Message())
+func TestShouldContainContainer(t *testing.T) {
+	s := stack
+	_ = s
+
+	result := cdktf.Testing_ToHaveResource(synth, digitalocean.App_TfResourceType())
+	if !*result {
+		t.Error("expected digital ocean app resource")
 	}
 }
 
-func TestShouldUseUbuntuImage(t *testing.T){
+func TestShouldHaveNameFromConfig(t *testing.T) {
 	properties := map[string]interface{}{
-		"name": "ubuntu:latest",
+		"spec": map[string]interface{}{
+			"name": "static-site-testing",
+		},
 	}
-	assertion := cdktf.Assertions_ToHaveResourceWithProperties(synth, docker.Image_TfResourceType(), &properties)
 
-	if !*assertion  {
-		t.Error(assertion.Message())
+	result := cdktf.Testing_ToHaveResourceWithProperties(synth, digitalocean.App_TfResourceType(), &properties)
+
+	if !*result {
+		t.Error("expected digital ocean app resource, to have properties", *synth)
 	}
 }
 
-func TestCheckValidity(t *testing.T){
+func TestCheckValidity(t *testing.T) {
 	assertion := cdktf.Testing_ToBeValidTerraform(cdktf.Testing_FullSynth(stack))
 
-	if !*assertion  {
-		t.Error(assertion.Message())
+	if !*assertion {
+		t.Error("invalid terraform config")
 	}
 }
-*/
